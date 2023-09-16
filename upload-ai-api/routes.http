@@ -1,0 +1,39 @@
+# @name get-prompts
+GET http://localhost:3333/prompts
+
+###
+
+# @name upload
+POST http://localhost:3333/videos
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary
+
+------WebKitFormBoundary
+Content-Disposition: form-data; name="file"; filename="nadson.mp3"
+Content-Type: audio/mpeg
+
+< ./nadson.mp3
+------WebKitFormBoundary--
+
+###
+
+# @name create-transcription
+
+POST  http://localhost:3333/videos/f9cd42db-6c40-4b4b-b321-5ae3e3a7b54d/transcription
+Content-Type: application/json
+
+{
+    "prompt": "Nadson, Ferinha"
+}
+
+###
+
+# @name generate-ai-completion
+
+POST  http://localhost:3333/ai/complete
+Content-Type: application/json
+
+{
+    "videoId": "f9cd42db-6c40-4b4b-b321-5ae3e3a7b54d",
+    "temperature": 0.5,
+    "prompt": "Gere um resumo sucinto da transcrição do vídeo informada a seguir: '''{transcription}'''"
+}
